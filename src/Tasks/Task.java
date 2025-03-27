@@ -14,19 +14,25 @@ public class Task {
         status = TaskStatus.NEW;
 
     }
+    public Task(String name, String description, int id, TaskStatus status){
+        this.name = name;
+        this.description = description;
+        this.id = id;
+        this.status = status;
+    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    protected void setName(String name) {
         this.name = name;
     }
 
     public String getDescription() {
         return description;
     }
-    public void setDescription(String description){
+    protected void setDescription(String description){
         this.description = description;
     }
 
@@ -37,8 +43,17 @@ public class Task {
     public TaskStatus getStatus() {
         return status;
     }
-
-    public void setStatus(TaskStatus status) {
+    protected void setStatus(TaskStatus status){
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", id=" + id +
+                ", status=" + status +
+                '}';
     }
 }

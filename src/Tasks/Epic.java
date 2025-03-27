@@ -4,30 +4,40 @@ import java.util.ArrayList;
 
 public class Epic extends Task{
 
-    private ArrayList<Integer> childrenSubtask;
+    private ArrayList<Integer> childrenSubtaskId = new ArrayList<>();
 
     public Epic(String name, String description, int id, ArrayList<Subtask> childrenSubtask) {
         super(name, description, id);
         for(Subtask subtask: childrenSubtask){
-            this.childrenSubtask.add(subtask.getId());
+            this.childrenSubtaskId.add(subtask.getId());
         }
     }
     public Epic(String name, String description, int id) {
         super(name, description, id);
     }
 
+    public ArrayList<Integer> getChildrenSubtaskId() {
+        return childrenSubtaskId;
+
+    }
+    protected void setChildrenSubtask(ArrayList<Integer> childrenSubtaskId) {
+        this.childrenSubtaskId = childrenSubtaskId;
+    }
     public void addSubtask(Subtask subtask){
-        childrenSubtask.add(subtask.getId());
+        childrenSubtaskId.add(subtask.getId());
     }
 
-    public void deleteSubTask(Subtask subtask){
-        childrenSubtask.remove(subtask.getId());
+    public void deleteSubTask(int id){
+        childrenSubtaskId.remove(Integer.valueOf(id));
     }
-
     @Override
-    public void setStatus(TaskStatus status) {
-        throw new UnsupportedOperationException("Метод setStatus не поддерживается в классе Epic.");
+    public String toString() {
+        return "Epic{" +
+                "name='" + getName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", id=" + getId() +
+                ", status=" + getStatus() +
+                ", childrenSubtaskId=" + childrenSubtaskId + // Добавляем список childrenSubtaskId
+                '}';
     }
-
-
 }
