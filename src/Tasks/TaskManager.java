@@ -12,13 +12,13 @@ public class TaskManager {
     private Map<Integer,Epic> epicMap = new HashMap<>();
 
 
-    public int getId() {
+    private int getId() {
         id++;
         return id;
     }
 
     // Таски
-    public ArrayList<Task> getTaskMap() {
+    public ArrayList<Task> getTaskList() {
         return new ArrayList<>(taskMap.values());
     }
     public void clearTaskMap(){
@@ -29,6 +29,7 @@ public class TaskManager {
 
     }
     public void createTask(Task task){
+        task.setId(getId());
         taskMap.put(task.getId(),task);
     }
     public void updateTask(Task task){
@@ -45,7 +46,7 @@ public class TaskManager {
     public void clearSubtaskMap(){
         subtaskMap.clear();
         for (Epic epic: epicMap.values()){
-            epic.setChildrenSubtask(null);
+            epic.setChildrenSubtask(new ArrayList<>());
             updateEpicStatus(epic);
         }
     }
@@ -54,6 +55,7 @@ public class TaskManager {
 
     }
     public void createSubtask(Subtask subtask){
+        subtask.setId(getId());
         subtaskMap.put(subtask.getId(), subtask);
         int idParentEpic = subtaskMap.get(subtask.getId()).getIdParentEpic();
         epicMap.get(idParentEpic).addSubtask(subtask);
@@ -83,6 +85,7 @@ public class TaskManager {
         return epicMap.get(id);
     }
     public void createEpic(Epic epic){
+        epic.setId(getId());
         epicMap.put(epic.getId(),epic);
     }
     public void updateEpic(Epic epic){

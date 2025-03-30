@@ -6,16 +6,21 @@ public class Epic extends Task{
 
     private ArrayList<Integer> childrenSubtaskId = new ArrayList<>();
 
-    public Epic(String name, String description, int id, ArrayList<Subtask> childrenSubtask) {
+    public Epic(String name, String description, ArrayList<Subtask> childrenSubtask) {
+        super(name, description);
+        for(Subtask subtask: childrenSubtask){
+            this.childrenSubtaskId.add(subtask.getId());
+        }
+    }
+    public Epic(String name, String description) {
+        super(name, description);
+    }
+    public Epic(String name, String description, ArrayList<Subtask> childrenSubtask, int id) {
         super(name, description, id);
         for(Subtask subtask: childrenSubtask){
             this.childrenSubtaskId.add(subtask.getId());
         }
     }
-    public Epic(String name, String description, int id) {
-        super(name, description, id);
-    }
-
     public ArrayList<Integer> getChildrenSubtaskId() {
         return childrenSubtaskId;
 
