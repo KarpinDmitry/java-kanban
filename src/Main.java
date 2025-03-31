@@ -18,7 +18,7 @@ public class Main {
         taskManager.createSubtask(subtask12);
 
 
-        ArrayList<Epic> arrayList = taskManager.getEpicMap();
+        ArrayList<Epic> arrayList = taskManager.getEpicList();
         for (Epic epic: arrayList){
             System.out.println(epic);
         }
@@ -40,19 +40,19 @@ public class Main {
             System.out.println(subtask);
         }
         System.out.println(epic1);
-//        System.out.println("Очистка substaskMap");
-//        taskManager.clearSubtaskMap();
-//        ArrayList<Subtask> listSubtask4 = taskManager.getListSubtask(epic1);
-//        for (Subtask subtask: listSubtask4){
-//            System.out.println(subtask);
-//        }
-//        System.out.println(epic1);
+        System.out.println("Очистка substaskMap");
+        taskManager.clearSubtaskMap();
+        ArrayList<Subtask> listSubtask4 = taskManager.getListSubtask(epic1);
+        for (Subtask subtask: listSubtask4){
+            System.out.println(subtask);
+        }
+        System.out.println(epic1);
         System.out.println("Апдейт эпика");
         Epic epic2 = new Epic(epic1.getName(),"Проверка", taskManager.getListSubtask(epic1), epic1.getId());
         taskManager.updateEpic(epic2);
         System.out.println(epic2);
-        ArrayList<Subtask> listSubtask4 = taskManager.getListSubtask(epic2);
-        for (Subtask subtask: listSubtask4){
+        ArrayList<Subtask> listSubtask5 = taskManager.getListSubtask(epic2);
+        for (Subtask subtask: listSubtask5){
             System.out.println(subtask);
         }
         System.out.println("getId");

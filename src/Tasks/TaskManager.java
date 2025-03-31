@@ -40,7 +40,7 @@ public class TaskManager {
     }
 
     //Сабтаски
-    public ArrayList<Subtask> getSubtaskMap() {
+    public ArrayList<Subtask> getSubtaskList() {
         return new ArrayList<>(subtaskMap.values());
     }
     public void clearSubtaskMap(){
@@ -75,7 +75,7 @@ public class TaskManager {
 
 
     //Эпики
-    public ArrayList<Epic> getEpicMap() {
+    public ArrayList<Epic> getEpicList() {
         return new ArrayList<>(epicMap.values());
     }
     public void clearEpicMap(){
