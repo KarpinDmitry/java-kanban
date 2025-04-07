@@ -1,3 +1,4 @@
+import Service.TaskManager;
 import Tasks.*;
 
 import java.util.ArrayList;
@@ -5,7 +6,7 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+        TaskManager inMemoryTaskManager = Managers.getDefault();
         Task task1 = new Task("gym","chest", TaskStatus.NEW);
         inMemoryTaskManager.createTask(task1);
         Epic epic1 = new Epic("homework","comp grafic, algoritm");
@@ -58,6 +59,5 @@ public class Main {
         System.out.println("getId");
         Epic epic3 = inMemoryTaskManager.getEpic(3);
         System.out.println(epic3);
-
     }
 }

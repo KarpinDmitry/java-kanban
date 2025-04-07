@@ -1,12 +1,15 @@
-package Tasks;
+package Service;
+
+import Tasks.Epic;
+import Tasks.Subtask;
+import Tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Deque;
 
 public interface TaskManager {
     int getId();
-
-    Deque<? extends Task> getHistory();
+    Deque<Task> getHistory();
     // Таски
     ArrayList<Task> getTaskList();
 

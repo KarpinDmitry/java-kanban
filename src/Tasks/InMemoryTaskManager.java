@@ -1,30 +1,26 @@
 package Tasks;
 
+import Service.HistoryManager;
+import Service.TaskManager;
+import Tasks.*;
+
 import java.util.*;
 
 
-public class InMemoryTaskManager implements TaskManager {
+class InMemoryTaskManager implements TaskManager {
     private int id = 0;
-    private Map<Integer,Task> taskMap = new HashMap<>();
-    private Map<Integer,Subtask> subtaskMap = new HashMap<>();
-    private Map<Integer,Epic> epicMap = new HashMap<>();
-
-    private Deque<Task> taskHistory = new ArrayDeque<>();
+    private Map<Integer, Task> taskMap = new HashMap<>();
+    private Map<Integer, Subtask> subtaskMap = new HashMap<>();
+    private Map<Integer, Epic> epicMap = new HashMap<>();
+    private HistoryManager historyManager = Managers.getDefaultHistory();
     @Override
     public int getId() {
         id++;
         return id;
     }
     @Override
-    public Deque<Task> getHistory(){
-        return taskHistory;
-    }
-    private  void updateHistory(Task task){
-        int maxSize = 10;
-        if (taskHistory.size() == maxSize){
-            taskHistory.pollFirst();
-        }
-        taskHistory.addLast(task);
+    public Deque<Task> getHistory() {
+        return historyManager.getHistory();
     }
 
     // Таски
@@ -38,7 +34,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
     @Override
     public Task getTask(int id){
-        updateHistory(taskMap.get(id));
+        historyManager.add(taskMap.get(id));
         return taskMap.get(id);
     }
     @Override
@@ -70,7 +66,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
     @Override
     public Subtask getSubtask(int id){
-        updateHistory(subtaskMap.get(id));
+        historyManager.add(subtaskMap.get(id));
         return subtaskMap.get(id);
     }
     @Override
@@ -113,7 +109,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
     @Override
     public Epic getEpic(int id){
-        updateHistory(epicMap.get(id));
+        historyManager.add(epicMap.get(id));
         return epicMap.get(id);
     }
     @Override
