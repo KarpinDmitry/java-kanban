@@ -1,4 +1,5 @@
 import Service.TaskManager;
+import Service.TaskStatus;
 import Tasks.*;
 
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ public class Main {
         inMemoryTaskManager.createEpic(epic1);
         Subtask subtask11 = new Subtask("comp grafic","", epic1.getId(), TaskStatus.DONE);
         Subtask subtask12 = new Subtask("algoritm","", epic1.getId(), TaskStatus.DONE);
-
 
         inMemoryTaskManager.createSubtask(subtask11);
         inMemoryTaskManager.createSubtask(subtask12);

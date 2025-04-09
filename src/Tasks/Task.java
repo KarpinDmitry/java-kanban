@@ -1,6 +1,8 @@
 package Tasks;
 
 
+import Service.TaskStatus;
+
 public class Task {
     private String name;
     private String description;

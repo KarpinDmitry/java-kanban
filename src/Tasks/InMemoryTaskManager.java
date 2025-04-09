@@ -2,7 +2,7 @@ package Tasks;
 
 import Service.HistoryManager;
 import Service.TaskManager;
-import Tasks.*;
+import Service.TaskStatus;
 
 import java.util.*;
 
@@ -13,14 +13,21 @@ class InMemoryTaskManager implements TaskManager {
     private Map<Integer, Subtask> subtaskMap = new HashMap<>();
     private Map<Integer, Epic> epicMap = new HashMap<>();
     private HistoryManager historyManager = Managers.getDefaultHistory();
+
+    protected InMemoryTaskManager(){}
+
+    public HistoryManager getHistoryManager() {
+        return historyManager;
+    }
+
     @Override
     public int getId() {
         id++;
         return id;
     }
     @Override
-    public Deque<Task> getHistory() {
-        return historyManager.getHistory();
+    public ArrayList<Task> getHistory() {
+        return (ArrayList<Task>) historyManager.getHistory();
     }
 
     // Таски

@@ -6,10 +6,11 @@ import Tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
 public interface TaskManager {
     int getId();
-    Deque<Task> getHistory();
+    ArrayList<Task> getHistory();
     // Таски
     ArrayList<Task> getTaskList();
 

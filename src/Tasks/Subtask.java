@@ -1,5 +1,7 @@
 package Tasks;
 
+import Service.TaskStatus;
+
 public class Subtask extends Task{
     private final int idParentEpic;
     public Subtask(String name, String description, int idParentEpic, TaskStatus status) {

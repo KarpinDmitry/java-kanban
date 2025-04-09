@@ -2,26 +2,29 @@ package Tasks;
 
 import Service.HistoryManager;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
+    private List<Task> taskHistory = new ArrayList<>();
 
-    private Deque<Task> taskHistory = new ArrayDeque<>();
+    protected InMemoryHistoryManager() {}
+
     @Override
     public void add(Task task) {
-        if (task == null){
+        if (task == null) {
             return;
         }
+        taskHistory.add(task);
+
         int maxSize = 10;
-        if (taskHistory.size() == maxSize){
-            taskHistory.pollFirst();
+        if (taskHistory.size() > maxSize) {
+            taskHistory.remove(0); // Удаляем первый элемент
         }
-        taskHistory.addLast(task);
     }
 
     @Override
-    public Deque<Task> getHistory() {
-        return taskHistory;
+    public List<Task> getHistory() {
+        return taskHistory; // Возвращаем историю задач
     }
 }
