@@ -1,10 +1,11 @@
-package Tasks;
+package Service;
 
 import Service.HistoryManager;
+import Tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//Класс менеджер истории, реализует интерфейс HistoryManager
 public class InMemoryHistoryManager implements HistoryManager {
     private List<Task> taskHistory = new ArrayList<>();
 

@@ -1,11 +1,16 @@
-package Tasks;
+package Service;
 
 import Service.HistoryManager;
+import Service.Managers;
 import Service.TaskManager;
 import Service.TaskStatus;
+import Tasks.Epic;
+import Tasks.Subtask;
+import Tasks.Task;
 
 import java.util.*;
 
+//Класс менеджер тасков, реализует интерфейс TaskManager
 
 class InMemoryTaskManager implements TaskManager {
     private int id = 0;

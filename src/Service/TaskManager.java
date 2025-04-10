@@ -7,7 +7,7 @@ import Tasks.Task;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
-
+//Интерфейс для управления задачами
 public interface TaskManager {
     List<Task> getHistory();
     // Таски

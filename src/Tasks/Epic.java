@@ -26,7 +26,7 @@ public class Epic extends Task{
         return childrenSubtaskId;
 
     }
-    protected void setChildrenSubtask(List<Integer> childrenSubtaskId) {
+    public void setChildrenSubtask(List<Integer> childrenSubtaskId) {
         this.childrenSubtaskId = childrenSubtaskId;
     }
     public void addSubtask(Subtask subtask){

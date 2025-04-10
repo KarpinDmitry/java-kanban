@@ -1,9 +1,10 @@
-package Tasks;
+package Service;
 
 import Service.HistoryManager;
+import Service.InMemoryHistoryManager;
 import Service.TaskManager;
-import Tasks.InMemoryTaskManager;
 
+//Утилитарный класс Managers
 public class Managers {
     public static TaskManager getDefault(){
         return new InMemoryTaskManager();

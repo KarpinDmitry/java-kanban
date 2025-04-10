@@ -53,14 +53,14 @@ public class Task {
     public int getId() {
         return id;
     }
-    protected void setId(int id){
+    public void setId(int id){
         this.id = id;
     }
 
     public TaskStatus getStatus() {
         return status;
     }
-    protected void setStatus(TaskStatus status){
+    public void setStatus(TaskStatus status){
         this.status = status;
     }
 

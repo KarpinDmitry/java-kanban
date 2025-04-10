@@ -1,8 +1,8 @@
 package Tasks;
 
+import Service.Managers;
 import Service.TaskManager;
 import Service.TaskStatus;
-import Tasks.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
