@@ -11,7 +11,7 @@ import Tasks.Task;
 import java.util.*;
 
 //Класс менеджер тасков, реализует интерфейс TaskManager
-
+//В
 class InMemoryTaskManager implements TaskManager {
     private int id = 0;
     private Map<Integer, Task> taskMap = new HashMap<>();
