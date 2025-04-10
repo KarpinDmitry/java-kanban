@@ -9,10 +9,9 @@ import java.util.Deque;
 import java.util.List;
 
 public interface TaskManager {
-    int getId();
-    ArrayList<Task> getHistory();
+    List<Task> getHistory();
     // Таски
-    ArrayList<Task> getTaskList();
+    List<Task> getTaskList();
 
     void clearTaskMap();
 
@@ -25,7 +24,7 @@ public interface TaskManager {
     void deleteTaskById(int id);
 
     //Сабтаски
-    ArrayList<Subtask> getSubtaskList();
+    List<Subtask> getSubtaskList();
 
     void clearSubtaskMap();
 
@@ -38,7 +37,7 @@ public interface TaskManager {
     void deleteSubtaskById(int id);
 
     //Эпики
-    ArrayList<Epic> getEpicList();
+    List<Epic> getEpicList();
 
     void clearEpicMap();
 
@@ -50,7 +49,6 @@ public interface TaskManager {
 
     void deleteEpicById(int id);
 
-    ArrayList<Subtask> getListSubtask(Epic epic);
+    List<Subtask> getListSubtask(Epic epic);
 
-    void updateEpicStatus(Epic epic);
 }

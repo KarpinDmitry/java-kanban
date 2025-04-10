@@ -61,7 +61,7 @@ public class InMemoryTaskMangerTest {
         tasks1.add(taskManager.getEpic(epic.getId()));
         tasks1.add(taskManager.getSubtask(subtask.getId()));
 
-        ArrayList<Task> tasks2 = taskManager.getHistory();
+        List<Task> tasks2 = taskManager.getHistory();
         assertEquals(tasks1,tasks2);
     }
     @Test
@@ -83,7 +83,6 @@ public class InMemoryTaskMangerTest {
             taskManager.getTask(task.getId());
         }
 
-        // Проверяем, что история содержит только последние 10 задач
         List<Task> history = taskManager.getHistory();
         assertEquals(10, history.size());
         assertEquals("Task 6", history.get(0).getName());
@@ -106,7 +105,7 @@ public class InMemoryTaskMangerTest {
 
     @Test
     public void testGetListSubtask() {
-        ArrayList<Subtask> subtasks = taskManager.getListSubtask(epic);
+        List<Subtask> subtasks = taskManager.getListSubtask(epic);
         assertTrue(subtasks.contains(subtask));
     }
 

@@ -1,12 +1,13 @@
 package Tasks;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Epic extends Task{
 
-    private ArrayList<Integer> childrenSubtaskId = new ArrayList<>();
+    private List<Integer> childrenSubtaskId = new ArrayList<>();
 
-    public Epic(String name, String description, ArrayList<Subtask> childrenSubtask) {
+    public Epic(String name, String description, List<Subtask> childrenSubtask) {
         super(name, description);
         for(Subtask subtask: childrenSubtask){
             this.childrenSubtaskId.add(subtask.getId());
@@ -15,17 +16,17 @@ public class Epic extends Task{
     public Epic(String name, String description) {
         super(name, description);
     }
-    public Epic(String name, String description, ArrayList<Subtask> childrenSubtask, int id) {
+    public Epic(String name, String description, List<Subtask> childrenSubtask, int id) {
         super(name, description, id);
         for(Subtask subtask: childrenSubtask){
             this.childrenSubtaskId.add(subtask.getId());
         }
     }
-    public ArrayList<Integer> getChildrenSubtaskId() {
+    public List<Integer> getChildrenSubtaskId() {
         return childrenSubtaskId;
 
     }
-    protected void setChildrenSubtask(ArrayList<Integer> childrenSubtaskId) {
+    protected void setChildrenSubtask(List<Integer> childrenSubtaskId) {
         this.childrenSubtaskId = childrenSubtaskId;
     }
     public void addSubtask(Subtask subtask){

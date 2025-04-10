@@ -16,23 +16,19 @@ class InMemoryTaskManager implements TaskManager {
 
     protected InMemoryTaskManager(){}
 
-    public HistoryManager getHistoryManager() {
-        return historyManager;
-    }
 
-    @Override
-    public int getId() {
+    private int getId() {
         id++;
         return id;
     }
     @Override
-    public ArrayList<Task> getHistory() {
-        return (ArrayList<Task>) historyManager.getHistory();
+    public List<Task> getHistory() {
+        return (List<Task>) historyManager.getHistory();
     }
 
     // Таски
     @Override
-    public ArrayList<Task> getTaskList() {
+    public List<Task> getTaskList() {
         return new ArrayList<>(taskMap.values());
     }
     @Override
@@ -60,7 +56,7 @@ class InMemoryTaskManager implements TaskManager {
 
     //Сабтаски
     @Override
-    public ArrayList<Subtask> getSubtaskList() {
+    public List<Subtask> getSubtaskList() {
         return new ArrayList<>(subtaskMap.values());
     }
     @Override
@@ -107,7 +103,7 @@ class InMemoryTaskManager implements TaskManager {
 
     //Эпики
     @Override
-    public ArrayList<Epic> getEpicList() {
+    public List<Epic> getEpicList() {
         return new ArrayList<>(epicMap.values());
     }
     @Override
@@ -134,9 +130,9 @@ class InMemoryTaskManager implements TaskManager {
         epicMap.remove(id);
     }
     @Override
-    public ArrayList<Subtask> getListSubtask(Epic epic){
-        ArrayList<Integer> childrenSubtaskId = epic.getChildrenSubtaskId();
-        ArrayList<Subtask> resultList = new ArrayList<>();
+    public List<Subtask> getListSubtask(Epic epic){
+        List<Integer> childrenSubtaskId = epic.getChildrenSubtaskId();
+        List<Subtask> resultList = new ArrayList<>();
         if (epic.getChildrenSubtaskId() == null){
             return resultList;
         }
@@ -145,9 +141,9 @@ class InMemoryTaskManager implements TaskManager {
         }
         return resultList;
     }
-    @Override
-    public void updateEpicStatus(Epic epic){
-        ArrayList<Integer> childrenSubtaskId = epic.getChildrenSubtaskId();
+
+    private void updateEpicStatus(Epic epic){
+        List<Integer> childrenSubtaskId = epic.getChildrenSubtaskId();
         boolean flagNew = true;
         boolean flagDone = true;
 
