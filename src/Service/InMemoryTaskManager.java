@@ -11,7 +11,8 @@ import Tasks.Task;
 import java.util.*;
 
 //Класс менеджер тасков, реализует интерфейс TaskManager
-//В
+//Вопрос: я перемесил по разным пакетам Task и TaskManager, но теперь все методы класса Task public, где тогда наша
+//инкапсуляция, если кто-угодно может поменять его поля?
 class InMemoryTaskManager implements TaskManager {
     private int id = 0;
     private Map<Integer, Task> taskMap = new HashMap<>();
@@ -21,11 +22,6 @@ class InMemoryTaskManager implements TaskManager {
 
     protected InMemoryTaskManager(){}
 
-
-    private int getId() {
-        id++;
-        return id;
-    }
     @Override
     public List<Task> getHistory() {
         return (List<Task>) historyManager.getHistory();
@@ -145,6 +141,10 @@ class InMemoryTaskManager implements TaskManager {
             resultList.add(getSubtask(id));
         }
         return resultList;
+    }
+    private int getId() {
+        id++;
+        return id;
     }
 
     private void updateEpicStatus(Epic epic){
