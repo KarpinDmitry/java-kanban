@@ -58,6 +58,7 @@ public class Epic extends Task {
                 ", childrenSubtaskId=" + childrenSubtaskId + // Добавляем список childrenSubtaskId
                 '}';
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

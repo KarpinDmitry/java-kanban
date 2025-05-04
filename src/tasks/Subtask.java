@@ -36,6 +36,7 @@ public class Subtask extends Task {
                 ", idParentEpic=" + idParentEpic +
                 '}';
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
