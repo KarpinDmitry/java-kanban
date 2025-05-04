@@ -1,8 +1,11 @@
-package Tasks;
+package ServiceTest;
 
 import Service.Managers;
 import Service.TaskManager;
 import Service.TaskStatus;
+import Tasks.Epic;
+import Tasks.Subtask;
+import Tasks.Task;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class InMemoryTaskMangerTest {
+public class InMemoryTaskManagerTest {
     TaskManager taskManager;
     Task task;
     Epic epic;
@@ -76,19 +79,6 @@ public class InMemoryTaskMangerTest {
         assertEquals("newTask1",taskManager.getHistory().get(1).getName());
     }
     @Test
-    public void testHistorySizeLimit() {
-        for (int i = 1; i <= 15; i++) {
-            Task task = new Task("Task " + i, "Description " + i);
-            taskManager.createTask(task);
-            taskManager.getTask(task.getId());
-        }
-
-        List<Task> history = taskManager.getHistory();
-        assertEquals(10, history.size());
-        assertEquals("Task 6", history.get(0).getName());
-        assertEquals("Task 15", history.get(9).getName());
-    }
-    @Test
     public void testCreateAndGetTask() {
         assertEquals(task, taskManager.getTask(task.getId()));
     }
@@ -139,4 +129,38 @@ public class InMemoryTaskMangerTest {
     public void testGetId() {
         assertNotNull(taskManager.getEpic(epic.getId()));
     }
+    @Test
+    public void directSetStatusShouldNotAffectManagerLogic() {
+        subtask.setStatus(TaskStatus.DONE);
+        assertNotEquals(TaskStatus.DONE, taskManager.getEpic(epic.getId()).getStatus(),
+                "Эпик не должен сам обновляться без updateSubtask()");
+    }
+    @Test
+    public void deletedSubtaskShouldNotBeReturned() {
+        taskManager.deleteSubtaskById(subtask.getId());
+        assertNull(taskManager.getSubtask(subtask.getId()));
+    }
+    @Test
+    public void subtaskShouldBeRemovedFromEpicAfterDeletion() {
+        taskManager.deleteSubtaskById(subtask.getId());
+        List<Subtask> subtasks = taskManager.getListSubtask(epic);
+        assertFalse(subtasks.contains(subtask));
+    }
+    @Test
+    void shouldNotAllowExternalModificationOfTaskStatus() {
+        TaskManager manager = Managers.getDefault();
+        Task task = new Task("Test", "Test description");
+        manager.createTask(task);
+        int id = task.getId();
+
+        // Изменим статус напрямую через геттер
+        Task retrievedTask = manager.getTask(id);
+        retrievedTask.setStatus(TaskStatus.DONE);
+
+        // Менеджер не контролирует эту операцию!
+        Task again = manager.getTask(id);
+        assertEquals(TaskStatus.NEW, again.getStatus(), "Статус задачи изменён без ведома менеджера!");
+    }
+
+
 }

@@ -34,6 +34,12 @@ public class Task {
         this.description = description;
         this.status = status;
     }
+    public Task(Task other) {
+        this.name = other.name;
+        this.description = other.description;
+        this.status = other.status;
+        this.id = other.id;
+    }
 
     public String getName() {
         return name;
