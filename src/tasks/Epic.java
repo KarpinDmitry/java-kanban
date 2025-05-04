@@ -1,45 +1,52 @@
-package Tasks;
+package tasks;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Epic extends Task{
+public class Epic extends Task {
 
     private List<Integer> childrenSubtaskId = new ArrayList<>();
 
     public Epic(String name, String description, List<Subtask> childrenSubtask) {
         super(name, description);
-        for(Subtask subtask: childrenSubtask){
+        for (Subtask subtask : childrenSubtask) {
             this.childrenSubtaskId.add(subtask.getId());
         }
     }
+
     public Epic(String name, String description) {
         super(name, description);
     }
+
     public Epic(String name, String description, List<Subtask> childrenSubtask, int id) {
         super(name, description, id);
-        for(Subtask subtask: childrenSubtask){
+        for (Subtask subtask : childrenSubtask) {
             this.childrenSubtaskId.add(subtask.getId());
         }
     }
+
     public Epic(Epic other) {
         super(other.getName(), other.getDescription(), other.getStatus(), other.getId());
         this.childrenSubtaskId = new ArrayList<>(other.getChildrenSubtaskId());
     }
+
     public List<Integer> getChildrenSubtaskId() {
         return childrenSubtaskId;
 
     }
+
     public void setChildrenSubtask(List<Integer> childrenSubtaskId) {
         this.childrenSubtaskId = childrenSubtaskId;
     }
-    public void addSubtask(Subtask subtask){
+
+    public void addSubtask(Subtask subtask) {
         childrenSubtaskId.add(subtask.getId());
     }
 
-    public void deleteSubTask(int id){
+    public void deleteSubTask(int id) {
         childrenSubtaskId.remove(Integer.valueOf(id));
     }
+
     @Override
     public String toString() {
         return "Epic{" +

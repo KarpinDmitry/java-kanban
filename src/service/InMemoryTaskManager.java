@@ -1,14 +1,13 @@
-package Service;
+package service;
 
-import Service.HistoryManager;
-import Service.Managers;
-import Service.TaskManager;
-import Service.TaskStatus;
-import Tasks.Epic;
-import Tasks.Subtask;
-import Tasks.Task;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 //Класс менеджер тасков, реализует интерфейс TaskManager
 //Вопрос: я перемесил по разным пакетам Task и TaskManager, но теперь все методы класса Task public, где тогда наша
