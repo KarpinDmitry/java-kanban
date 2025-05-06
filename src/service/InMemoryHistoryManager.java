@@ -51,6 +51,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         }
         return newNode;
     }
+
     public List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
         Node currentNode = head;
