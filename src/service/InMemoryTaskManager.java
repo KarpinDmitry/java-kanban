@@ -166,7 +166,7 @@ class InMemoryTaskManager implements TaskManager {
     public List<Subtask> getListSubtask(Epic epic) {
         List<Integer> childrenSubtaskId = epic.getChildrenSubtaskId();
         List<Subtask> resultList = new ArrayList<>();
-        if (epic.getChildrenSubtaskId() == null) {
+        if (childrenSubtaskId == null) {
             return resultList;
         }
         for (int id : childrenSubtaskId) {
