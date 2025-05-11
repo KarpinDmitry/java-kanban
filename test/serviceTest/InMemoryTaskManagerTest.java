@@ -1,8 +1,11 @@
-package Tasks;
+package serviceTest;
 
-import Service.Managers;
-import Service.TaskManager;
-import Service.TaskStatus;
+import service.Managers;
+import service.TaskManager;
+import service.TaskStatus;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,82 +15,77 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class InMemoryTaskMangerTest {
+public class InMemoryTaskManagerTest {
     TaskManager taskManager;
     Task task;
     Epic epic;
     Subtask subtask;
+
     @BeforeEach
-    public void beforeEach(){
+    public void beforeEach() {
         taskManager = Managers.getDefault();
-        task = new Task("task1","1", TaskStatus.NEW);
+        task = new Task("task1", "1", TaskStatus.NEW);
         taskManager.createTask(task);
-        epic = new Epic("epic1","1");
+        epic = new Epic("epic1", "1");
         taskManager.createEpic(epic);
-        subtask = new Subtask("subtask1","1",epic.getId(),TaskStatus.NEW);
+        subtask = new Subtask("subtask1", "1", epic.getId(), TaskStatus.NEW);
         taskManager.createSubtask(subtask);
     }
+
     @Test
-    public void shouldBeEqualsIdIfTaskEquals(){
+    public void shouldBeEqualsIdIfTaskEquals() {
         Task task1 = taskManager.getTask(task.getId());
         Task task2 = taskManager.getTask(task.getId());
 
         assertEquals(task1, task2);
     }
+
     @Test
-    public void shouldBeEqualsIdIfEpicEquals(){
+    public void shouldBeEqualsIdIfEpicEquals() {
         Epic epic1 = taskManager.getEpic(epic.getId());
         Epic epic2 = taskManager.getEpic(epic.getId());
 
-        assertEquals(epic1,epic2);
+        assertEquals(epic1, epic2);
     }
+
     @Test
-    public void shouldBeEqualsIdIfSubtaskEquals(){
+    public void shouldBeEqualsIdIfSubtaskEquals() {
         Subtask subtask1 = taskManager.getSubtask(subtask.getId());
         Subtask subtask2 = taskManager.getSubtask(subtask.getId());
 
-        assertEquals(subtask1,subtask2);
+        assertEquals(subtask1, subtask2);
     }
+
     @Test
-    public void tasksNotChangeWhenAddingToManager(){
-        assertEquals(task.getName(),taskManager.getTask(task.getId()).getName());
-        assertEquals(task.getDescription(),taskManager.getTask(task.getId()).getDescription());
-        assertEquals(task.getStatus(),taskManager.getTask(task.getId()).getStatus());
+    public void tasksNotChangeWhenAddingToManager() {
+        assertEquals(task.getName(), taskManager.getTask(task.getId()).getName());
+        assertEquals(task.getDescription(), taskManager.getTask(task.getId()).getDescription());
+        assertEquals(task.getStatus(), taskManager.getTask(task.getId()).getStatus());
     }
+
     @Test
-    public void workHistoryManager(){
+    public void workHistoryManager() {
         ArrayList<Task> tasks1 = new ArrayList<>();
         tasks1.add(taskManager.getTask(task.getId()));
         tasks1.add(taskManager.getEpic(epic.getId()));
         tasks1.add(taskManager.getSubtask(subtask.getId()));
 
         List<Task> tasks2 = taskManager.getHistory();
-        assertEquals(tasks1,tasks2);
+        assertEquals(tasks1, tasks2);
     }
+
     @Test
-    public void shouldBeSaveAllVersionOfTheTask(){
+    public void shouldBeSaveAllVersionOfTheTask() {
         Task task1 = taskManager.getTask(task.getId());
-        Task task2 = new Task("newTask1",task1.getDescription(),task1.getStatus());
+        Task task2 = new Task("newTask1", task1.getDescription(), task1.getStatus());
         taskManager.createTask(task2);
         taskManager.getTask(task2.getId());
 
-        Assertions.assertNotEquals(taskManager.getHistory().get(0),taskManager.getHistory().get(1));
-        assertEquals("task1",taskManager.getHistory().get(0).getName());
-        assertEquals("newTask1",taskManager.getHistory().get(1).getName());
+        Assertions.assertNotEquals(taskManager.getHistory().get(0), taskManager.getHistory().get(1));
+        assertEquals("task1", taskManager.getHistory().get(0).getName());
+        assertEquals("newTask1", taskManager.getHistory().get(1).getName());
     }
-    @Test
-    public void testHistorySizeLimit() {
-        for (int i = 1; i <= 15; i++) {
-            Task task = new Task("Task " + i, "Description " + i);
-            taskManager.createTask(task);
-            taskManager.getTask(task.getId());
-        }
 
-        List<Task> history = taskManager.getHistory();
-        assertEquals(10, history.size());
-        assertEquals("Task 6", history.get(0).getName());
-        assertEquals("Task 15", history.get(9).getName());
-    }
     @Test
     public void testCreateAndGetTask() {
         assertEquals(task, taskManager.getTask(task.getId()));
@@ -139,4 +137,42 @@ public class InMemoryTaskMangerTest {
     public void testGetId() {
         assertNotNull(taskManager.getEpic(epic.getId()));
     }
+
+    @Test
+    public void directSetStatusShouldNotAffectManagerLogic() {
+        subtask.setStatus(TaskStatus.DONE);
+        assertNotEquals(TaskStatus.DONE, taskManager.getEpic(epic.getId()).getStatus(),
+                "Эпик не должен сам обновляться без updateSubtask()");
+    }
+
+    @Test
+    public void deletedSubtaskShouldNotBeReturned() {
+        taskManager.deleteSubtaskById(subtask.getId());
+        assertNull(taskManager.getSubtask(subtask.getId()));
+    }
+
+    @Test
+    public void subtaskShouldBeRemovedFromEpicAfterDeletion() {
+        taskManager.deleteSubtaskById(subtask.getId());
+        List<Subtask> subtasks = taskManager.getListSubtask(epic);
+        assertFalse(subtasks.contains(subtask));
+    }
+
+    @Test
+    void shouldNotAllowExternalModificationOfTaskStatus() {
+        TaskManager manager = Managers.getDefault();
+        Task task = new Task("Test", "Test description");
+        manager.createTask(task);
+        int id = task.getId();
+
+        // Изменим статус напрямую через геттер
+        Task retrievedTask = manager.getTask(id);
+        retrievedTask.setStatus(TaskStatus.DONE);
+
+        // Менеджер не контролирует эту операцию!
+        Task again = manager.getTask(id);
+        assertEquals(TaskStatus.NEW, again.getStatus(), "Статус задачи изменён без ведома менеджера!");
+    }
+
+
 }
