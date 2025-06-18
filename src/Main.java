@@ -1,9 +1,9 @@
 import service.Managers;
 import service.TaskManager;
-import service.TaskStatus;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
+import tasks.TaskStatus;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class Main {
         inMemoryTaskManager.createSubtask(subtask11);
         inMemoryTaskManager.createSubtask(subtask12);
 
-
+        System.out.println(task1);
         List<Epic> arrayList = inMemoryTaskManager.getEpicList();
         for (Epic epic : arrayList) {
             System.out.println(epic);

@@ -1,8 +1,6 @@
 package tasks;
 
 
-import service.TaskStatus;
-
 import java.util.Objects;
 
 public class Task {
@@ -10,6 +8,7 @@ public class Task {
     private String description;
     private int id;
     private TaskStatus status;
+
 
     public Task(String name, String description) {
         this.name = name;
@@ -38,6 +37,7 @@ public class Task {
         this.name = name;
         this.description = description;
         this.status = status;
+
     }
 
     public Task(Task other) {
@@ -45,10 +45,15 @@ public class Task {
         this.description = other.description;
         this.status = other.status;
         this.id = other.id;
+
     }
 
     public String getName() {
         return name;
+    }
+
+    public TaskType getType() {
+        return TaskType.TASK;
     }
 
     protected void setName(String name) {
@@ -81,14 +86,8 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", id=" + id +
-                ", status=" + status +
-                '}';
+        return id + "," + getType().toString() + "," + name + "," + status + "," + description;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

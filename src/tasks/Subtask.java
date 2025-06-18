@@ -1,7 +1,5 @@
 package tasks;
 
-import service.TaskStatus;
-
 import java.util.Objects;
 
 public class Subtask extends Task {
@@ -22,19 +20,21 @@ public class Subtask extends Task {
         this.idParentEpic = other.idParentEpic;
     }
 
+    @Override
+    public TaskType getType() {
+        return TaskType.SUBTASK;
+    }
+
     public int getIdParentEpic() {
         return idParentEpic;
     }
 
     @Override
     public String toString() {
-        return "Subtask{" +
-                "name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", id=" + getId() +
-                ", status=" + getStatus() +
-                ", idParentEpic=" + idParentEpic +
-                '}';
+        return getId() + "," + getType().toString() + "," + getName() + "," + getStatus() + "," + getDescription()
+                + ","
+                + getIdParentEpic();
+
     }
 
     @Override

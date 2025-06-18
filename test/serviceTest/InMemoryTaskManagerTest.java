@@ -2,7 +2,7 @@ package serviceTest;
 
 import service.Managers;
 import service.TaskManager;
-import service.TaskStatus;
+import tasks.TaskStatus;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
