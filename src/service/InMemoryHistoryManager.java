@@ -9,7 +9,7 @@ import java.util.Map;
 
 //Класс менеджер истории, реализует интерфейс HistoryManager
 public class InMemoryHistoryManager implements HistoryManager {
-    private Map<Integer, Node> idNodeMap = new HashMap<>();
+    private final Map<Integer, Node> idNodeMap = new HashMap<>();
     private Node head;
     private Node tail;
 

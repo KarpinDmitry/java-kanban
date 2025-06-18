@@ -52,12 +52,12 @@ public class Task {
         return name;
     }
 
-    public TaskType getType() {
-        return TaskType.TASK;
-    }
-
     protected void setName(String name) {
         this.name = name;
+    }
+
+    public TaskType getType() {
+        return TaskType.TASK;
     }
 
     public String getDescription() {
@@ -88,6 +88,7 @@ public class Task {
     public String toString() {
         return id + "," + getType().toString() + "," + name + "," + status + "," + description;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

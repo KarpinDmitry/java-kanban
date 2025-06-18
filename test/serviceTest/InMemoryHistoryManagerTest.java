@@ -1,9 +1,9 @@
 package serviceTest;
 
-import service.InMemoryHistoryManager;
-import tasks.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import service.InMemoryHistoryManager;
+import tasks.Task;
 
 import java.util.List;
 

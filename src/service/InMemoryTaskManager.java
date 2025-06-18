@@ -14,21 +14,17 @@ import java.util.Map;
 
 class InMemoryTaskManager implements TaskManager {
     private int id = 0;
-    private Map<Integer, Task> taskMap = new HashMap<>();
-    private Map<Integer, Subtask> subtaskMap = new HashMap<>();
-    private Map<Integer, Epic> epicMap = new HashMap<>();
-    private HistoryManager historyManager = Managers.getDefaultHistory();
+    private final Map<Integer, Task> taskMap = new HashMap<>();
+    private final Map<Integer, Subtask> subtaskMap = new HashMap<>();
+    private final Map<Integer, Epic> epicMap = new HashMap<>();
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     protected InMemoryTaskManager() {
     }
 
-    protected void setId(int id) {
-        this.id = id;
-    }
-
     @Override
     public List<Task> getHistory() {
-        return (List<Task>) historyManager.getHistory();
+        return historyManager.getHistory();
     }
 
     // Таски
@@ -145,7 +141,6 @@ class InMemoryTaskManager implements TaskManager {
         updateEpicStatus(epicMap.get(idParentEpic));
     }
 
-
     //Эпики
     @Override
     public List<Epic> getEpicList() {
@@ -209,6 +204,10 @@ class InMemoryTaskManager implements TaskManager {
     private int getId() {
         id++;
         return id;
+    }
+
+    protected void setId(int id) {
+        this.id = id;
     }
 
     private void updateEpicStatus(Epic epic) {

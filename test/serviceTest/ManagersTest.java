@@ -1,8 +1,8 @@
 package serviceTest;
 
-import service.Managers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import service.Managers;
 
 public class ManagersTest {
     @Test

@@ -1,14 +1,14 @@
 package serviceTest;
 
-import service.Managers;
-import service.TaskManager;
-import tasks.TaskStatus;
-import tasks.Epic;
-import tasks.Subtask;
-import tasks.Task;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import service.Managers;
+import service.TaskManager;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
+import tasks.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.List;
