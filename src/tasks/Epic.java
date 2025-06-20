@@ -19,6 +19,10 @@ public class Epic extends Task {
         super(name, description);
     }
 
+    public Epic(String name, String description, int id) {
+        super(name, description, id);
+    }
+
     public Epic(String name, String description, List<Subtask> childrenSubtask, int id) {
         super(name, description, id);
         for (Subtask subtask : childrenSubtask) {
@@ -32,12 +36,17 @@ public class Epic extends Task {
     }
 
     public List<Integer> getChildrenSubtaskId() {
-        return childrenSubtaskId;
+        return new ArrayList<>(childrenSubtaskId);
 
     }
 
+    @Override
+    public TaskType getType() {
+        return TaskType.EPIC;
+    }
+
     public void setChildrenSubtask(List<Integer> childrenSubtaskId) {
-        this.childrenSubtaskId = childrenSubtaskId;
+        this.childrenSubtaskId = new ArrayList<>(childrenSubtaskId);
     }
 
     public void addSubtask(Subtask subtask) {
@@ -50,21 +59,15 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "Epic{" +
-                "name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", id=" + getId() +
-                ", status=" + getStatus() +
-                ", childrenSubtaskId=" + childrenSubtaskId + // Добавляем список childrenSubtaskId
-                '}';
+        return getId() + "," + getType().toString() + "," + getName() + "," + getStatus() + "," + getDescription();
+
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Epic)) return false;
+        if (!(o instanceof Epic epic)) return false;
         if (!super.equals(o)) return false;
-        Epic epic = (Epic) o;
         return Objects.equals(childrenSubtaskId, epic.childrenSubtaskId);
     }
 

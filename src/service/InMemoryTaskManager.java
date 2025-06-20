@@ -3,6 +3,7 @@ package service;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
+import tasks.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,27 +11,30 @@ import java.util.List;
 import java.util.Map;
 
 //Класс менеджер тасков, реализует интерфейс TaskManager
-//Вопрос: я перемесил по разным пакетам Task и TaskManager, но теперь все методы класса Task public, где тогда наша
-//инкапсуляция, если кто-угодно может поменять его поля?
+
 class InMemoryTaskManager implements TaskManager {
     private int id = 0;
-    private Map<Integer, Task> taskMap = new HashMap<>();
-    private Map<Integer, Subtask> subtaskMap = new HashMap<>();
-    private Map<Integer, Epic> epicMap = new HashMap<>();
-    private HistoryManager historyManager = Managers.getDefaultHistory();
+    private final Map<Integer, Task> taskMap = new HashMap<>();
+    private final Map<Integer, Subtask> subtaskMap = new HashMap<>();
+    private final Map<Integer, Epic> epicMap = new HashMap<>();
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     protected InMemoryTaskManager() {
     }
 
     @Override
     public List<Task> getHistory() {
-        return (List<Task>) historyManager.getHistory();
+        return historyManager.getHistory();
     }
 
     // Таски
     @Override
     public List<Task> getTaskList() {
-        return new ArrayList<>(taskMap.values());
+        List<Task> result = new ArrayList<>();
+        for (Task task : taskMap.values()) {
+            result.add(new Task(task));
+        }
+        return result;
     }
 
     @Override
@@ -66,10 +70,18 @@ class InMemoryTaskManager implements TaskManager {
 
     }
 
+    protected void putTask(Task task) {
+        taskMap.put(task.getId(), task);
+    }
+
     //Сабтаски
     @Override
     public List<Subtask> getSubtaskList() {
-        return new ArrayList<>(subtaskMap.values());
+        List<Subtask> result = new ArrayList<>();
+        for (Subtask subtask : subtaskMap.values()) {
+            result.add(new Subtask(subtask));
+        }
+        return result;
     }
 
     @Override
@@ -122,11 +134,21 @@ class InMemoryTaskManager implements TaskManager {
         historyManager.remove(id);
     }
 
+    protected void putSubtask(Subtask subtask) {
+        subtaskMap.put(subtask.getId(), subtask);
+        int idParentEpic = subtask.getIdParentEpic();
+        epicMap.get(idParentEpic).addSubtask(subtask);
+        updateEpicStatus(epicMap.get(idParentEpic));
+    }
 
     //Эпики
     @Override
     public List<Epic> getEpicList() {
-        return new ArrayList<>(epicMap.values());
+        List<Epic> result = new ArrayList<>();
+        for (Epic epic : epicMap.values()) {
+            result.add(new Epic(epic));
+        }
+        return result;
     }
 
     @Override
@@ -175,9 +197,17 @@ class InMemoryTaskManager implements TaskManager {
         return resultList;
     }
 
+    protected void putEpic(Epic epic) {
+        epicMap.put(epic.getId(), epic);
+    }
+
     private int getId() {
         id++;
         return id;
+    }
+
+    protected void setId(int id) {
+        this.id = id;
     }
 
     private void updateEpicStatus(Epic epic) {

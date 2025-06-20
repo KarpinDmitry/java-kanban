@@ -9,7 +9,7 @@ import java.util.Map;
 
 //Класс менеджер истории, реализует интерфейс HistoryManager
 public class InMemoryHistoryManager implements HistoryManager {
-    private Map<Integer, Node> idNodeMap = new HashMap<>();
+    private final Map<Integer, Node> idNodeMap = new HashMap<>();
     private Node head;
     private Node tail;
 
@@ -38,7 +38,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         return getTasks(); // Возвращаем историю задач
     }
 
-    public Node linkTask(Task task) {
+    private Node linkTask(Task task) {
         Node newNode;
         if (head == null) {
             newNode = new Node(null, task, null);
@@ -52,7 +52,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         return newNode;
     }
 
-    public List<Task> getTasks() {
+    private List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
         Node currentNode = head;
         while (currentNode != null) {
