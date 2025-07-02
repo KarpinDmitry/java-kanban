@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import service.InMemoryHistoryManager;
 import tasks.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,11 +21,14 @@ class InMemoryHistoryManagerTest {
     @BeforeEach
     void setUp() {
         historyManager = new InMemoryHistoryManager();
-        task1 = new Task("Task 1", "desc1");
+        task1 = new Task("Task 1", "desc1", Duration.ofMinutes(90), LocalDateTime.of(2024, 6,
+                2, 10, 0));
         task1.setId(1);
-        task2 = new Task("Task 2", "desc2");
+        task2 = new Task("Task 2", "desc2", Duration.ofMinutes(90), LocalDateTime.of(2024, 6,
+                2, 10, 0));
         task2.setId(2);
-        task3 = new Task("Task 3", "desc3");
+        task3 = new Task("Task 3", "desc3", Duration.ofMinutes(90), LocalDateTime.of(2024, 6,
+                2, 10, 0));
         task3.setId(3);
     }
 
