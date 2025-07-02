@@ -12,7 +12,6 @@ import java.util.*;
 //Класс менеджер тасков, реализует интерфейс TaskManager
 
 public class InMemoryTaskManager implements TaskManager {
-    private int id = 0;
     private final Map<Integer, Task> taskMap = new HashMap<>();
     private final Map<Integer, Subtask> subtaskMap = new HashMap<>();
     private final Map<Integer, Epic> epicMap = new HashMap<>();
@@ -24,6 +23,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return cmp;
     });
+    private int id = 0;
 
     protected InMemoryTaskManager() {
     }
@@ -276,6 +276,7 @@ public class InMemoryTaskManager implements TaskManager {
 
         return start1.isBefore(end2) && start2.isBefore(end1);
     }
+
     private void updateEpicStatus(Epic epic) {
         List<Integer> childrenSubtaskId = epic.getChildrenSubtaskId();
         boolean flagNew = true;
