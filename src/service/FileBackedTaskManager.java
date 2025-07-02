@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
@@ -28,9 +30,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
                 Task task = fromString(line);
                 switch (task.getType()) {
-                    case TASK -> manager.putTask(task);
+                    case TASK -> {
+                        manager.putTask(task);
+                        manager.updatePrioritizedTask(task);
+                    }
                     case EPIC -> manager.putEpic((Epic) task);
-                    case SUBTASK -> manager.putSubtask((Subtask) task);
+                    case SUBTASK -> {
+                        manager.putSubtask((Subtask) task);
+                        manager.updatePrioritizedTask(task);
+                    }
                 }
                 maxId = Math.max(maxId, task.getId());
             }
@@ -49,16 +57,20 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         TaskStatus status = TaskStatus.valueOf(taskElements[3]);
         String description = taskElements[4];
 
+        Duration duration = "null".equals(taskElements[5]) ? null : Duration.ofMinutes(Long.parseLong(taskElements[5]));
+        LocalDateTime startTime = "null".equals(taskElements[6]) ? null : LocalDateTime.parse(taskElements[6]);
+
         switch (type) {
             case TASK -> {
-                return new Task(name, description, status, id);
+                return new Task(name, description, status, id, duration, startTime);
             }
             case EPIC -> {
-                return new Epic(name, description, id);
+                LocalDateTime endTime = "null".equals(taskElements[7]) ? null : LocalDateTime.parse(taskElements[7]);
+                return new Epic(name, description, id, duration, startTime, endTime);
             }
             case SUBTASK -> {
-                int idParentEpic = Integer.parseInt(taskElements[5]);
-                return new Subtask(name, description, idParentEpic, status, id);
+                int idParentEpic = Integer.parseInt(taskElements[7]);
+                return new Subtask(name, description, idParentEpic, status, id, duration, startTime);
             }
             default -> throw new ManagerSaveException("Неизвестный тип задачи: " + type);
         }
@@ -164,8 +176,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
 
         try (BufferedWriter writer = Files.newBufferedWriter(file, StandardCharsets.UTF_8)) {
-            writer.write("id,type,name,status,description,epic\n");
+            writer.write("id,type,name,status,description,duration,startTime,endTime,epic\n");
             writer.write(resultString.toString());
+            System.out.println(resultString);
         } catch (IOException exception) {
             throw new ManagerSaveException("Ошибка при сохранении данных в файл: " + file);
         }
