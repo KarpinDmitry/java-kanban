@@ -13,14 +13,14 @@ public class Epic extends Task {
     private LocalDateTime endTime;
 
     public Epic(String name, String description, List<Subtask> childrenSubtask) {
-        super(name, description, (Duration) null, null);
+        super(name, description);
         for (Subtask subtask : childrenSubtask) {
             this.childrenSubtaskId.add(subtask.getId());
         }
     }
 
     public Epic(String name, String description) {
-        super(name, description, (Duration) null, null);
+        super(name, description);
     }
 
     public Epic(String name, String description, int id) {

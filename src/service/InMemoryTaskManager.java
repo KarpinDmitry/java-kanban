@@ -33,7 +33,7 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
-    public ArrayList<Task> getPrioritizedTasks() {
+    public List<Task> getPrioritizedTasks() {
         return new ArrayList<Task>(prioritizedTasks);
     }
 
@@ -205,15 +205,17 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epicMap.get(id);
         if (epic != null) {
             List<Integer> childrenSubtaskId = epic.getChildrenSubtaskId();
-            if (childrenSubtaskId != null) {
-                for (Integer subtaskId : childrenSubtaskId) {
-                    Subtask subtask = subtaskMap.get(subtaskId);
-                    if (subtask != null) {
-                        prioritizedTasks.remove(subtask);
-                        subtaskMap.remove(subtaskId);
-                        historyManager.remove(subtaskId);
-                    }
+            if (childrenSubtaskId == null) {
+                return;
+            }
+            for (Integer subtaskId : childrenSubtaskId) {
+                Subtask subtask = subtaskMap.get(subtaskId);
+                if (subtask == null) {
+                    continue;
                 }
+                prioritizedTasks.remove(subtask);
+                subtaskMap.remove(subtaskId);
+                historyManager.remove(subtaskId);
             }
             epicMap.remove(id);
             historyManager.remove(id);

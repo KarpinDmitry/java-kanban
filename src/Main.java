@@ -1,4 +1,5 @@
 import service.FileBackedTaskManager;
+import service.Managers;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
@@ -13,7 +14,7 @@ public class Main {
         Path path = Path.of("tasks.csv");
 
         // 1. Создаём менеджер
-        FileBackedTaskManager manager = new FileBackedTaskManager(path);
+        FileBackedTaskManager manager = Managers.getFileBackTaskManager();
 
         // 2. Создаём задачи
         Task task = new Task("Покупка продуктов", "Купить молоко и хлеб", TaskStatus.NEW,

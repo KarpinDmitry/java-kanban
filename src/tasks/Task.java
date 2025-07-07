@@ -32,6 +32,14 @@ public class Task {
         this.startTime = startTime;
     }
 
+    public Task(String name, String description) {
+        this.name = name;
+        this.description = description;
+        status = TaskStatus.NEW;
+        duration = null;
+        startTime = null;
+    }
+
     public Task(String name, String description, TaskStatus status, int id, Duration duration,
                 LocalDateTime startTime) {
         this.name = name;
